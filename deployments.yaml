@@ -6,6 +6,8 @@ metadata:
 type: Opaque
 stringData:
   MONGODB_URI: mongodb://mongodb:27017/artgallery
+  MONGODB_AUTH_URI: mongodb://mongodb:27017/artgallery
+  MONGODB_FEEDBACK_URI: mongodb://mongodb:27017/artgallery
 
 ---
 
@@ -49,6 +51,16 @@ spec:
               secretKeyRef:
                 name: studio-secret
                 key: MONGODB_URI
+          - name: MONGODB_AUTH_URI
+            valueFrom:
+              secretKeyRef:
+                name: studio-secret
+                key: MONGODB_AUTH_URI
+          - name: MONGODB_FEEDBACK_URI
+            valueFrom:
+              secretKeyRef:
+                name: studio-secret
+                key: MONGODB_FEEDBACK_URI
 
 
 ---
