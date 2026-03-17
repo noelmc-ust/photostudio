@@ -1,15 +1,7 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: studio-ingress
-  namespace: studio-ns
-  annotations:
-    haproxy-ingress.github.io/rewrite-target: /
 spec:
   ingressClassName: haproxy
   rules:
-  - host: studio.local  
-    http:
+  - http: # No 'host' line here makes it a "Catch-All"
       paths:
       - path: /
         pathType: Prefix
@@ -17,4 +9,4 @@ spec:
           service:
             name: studio-service
             port:
-              number: 3004 # Matches your Service's port
+              number: 3004
