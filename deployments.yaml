@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: studio-secret
+  namespace: studio-ns
+type: Opaque
+stringData:
+  MONGODB_URI: mongodb://mongodb:27017/artgallery
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: studio-app
+  namespace: studio-ns
+  labels:
+    app: studio
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: std
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: std
+    spec:
+      containers:
+        - name: stdudioapp-container
+          image: nmc9812/studio:v1.1.0
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          env:
+          - name: MONGO_URI
+            valueFrom:
+              secretKeyRef:
+                name: stduio-secret
+                key: MONGO_URI
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: studio-service
+  namespace: studio-ns
+spec:
+  selector:
+    app: std
+  ports:
+    - port: 3004
+      targetPort: 3000
+      protocol: TCP
+  type: NodePort
+
+      
