@@ -1,7 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: studio-ingress
+  namespace: studio-ns
+  annotations:
+    haproxy-ingress.github.io/rewrite-target: /
 spec:
   ingressClassName: haproxy
   rules:
-  - http: # No 'host' line here makes it a "Catch-All"
+  - http: 
       paths:
       - path: /
         pathType: Prefix
