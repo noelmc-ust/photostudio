@@ -36,12 +36,19 @@ spec:
           image: nmc9812/studio:v1.1.0
           ports:
             - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
           env:
-          - name: MONGO_URI
+          - name: MONGODB_URI
             valueFrom:
               secretKeyRef:
-                name: stduio-secret
-                key: MONGO_URI
+                name: studio-secret
+                key: MONGODB_URI
 
 
 ---
