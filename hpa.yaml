@@ -8,13 +8,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: studio-app
-    minReplicas: 4
-    maxReplicas: 10
-    metrics:
-      - type: Resource
-        resource:
-          name: cpu
-          target:
-            type: Utilization
-            averageUtilization: 5
+  minReplicas: 4
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 5
 
